@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -58,7 +58,7 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
     }
 
     private static renderplanetsTable(planets: PlanetRow[]) {
-		return <Table className={classes.table}>
+		return <Table>
 				<TableHead>
 				  <TableRow>
 					<TableCell>Name</TableCell>
