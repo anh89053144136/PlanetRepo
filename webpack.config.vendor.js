@@ -18,7 +18,7 @@ module.exports = (env) => {
         },
         entry: {
 			// 'bootstrap', 'bootstrap/dist/css/bootstrap.css',
-            vendor: [ 'event-source-polyfill', 'isomorphic-fetch', 'react', 'react-dom', 'react-router-dom', 'jquery'],
+            vendor: ['@material-ui/core', 'event-source-polyfill', 'isomorphic-fetch', 'react', 'react-dom', 'react-router-dom', 'jquery'],
         },
         output: {
             path: path.join(__dirname, 'wwwroot', 'dist'),
