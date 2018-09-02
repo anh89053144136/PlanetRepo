@@ -10,6 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 
 interface PlanetsViewState {
     planets: PlanetRow[];
@@ -18,8 +19,10 @@ interface PlanetsViewState {
 
 export class PlanetsView extends React.Component<RouteComponentProps<{}>, PlanetsViewState> {
 	
-    constructor() {
-        super();
+	private orderBy: string;
+	
+    constructor(props: any) {
+        super(props);
         //this.state = { planets: [], loading: true };
 
 		/*
@@ -57,13 +60,45 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
         </div>;
     }
 
+	handleRequestSort = (property: any) => {
+		const orderBy = property;
+		let order = 'desc';
+
+		if (this.state.orderBy === property && this.state.order === 'desc') {
+		  order = 'asc';
+		}
+
+		this.setState({ order, orderBy });
+	  };
+  
     private static renderplanetsTable(planets: PlanetRow[]) {
 		return <Table>
 				<TableHead>
 				  <TableRow>
-					<TableCell>Name</TableCell>
-					<TableCell>Last visit date</TableCell>
-					<TableCell numeric>Radius</TableCell>
+					<TableCell sortDirection={orderBy === row.id ? order : false}>
+						<TableSortLabel
+							active={orderBy === row.id}
+							direction={order}
+							onClick={this.handleRequestSort(row.id)}>
+							Name
+						</TableSortLabel>
+					</TableCell>
+					<TableCell sortDirection={orderBy === row.id ? order : false}>
+						<TableSortLabel
+							active={orderBy === row.id}
+							direction={order}
+							onClick={this.createSortHandler(row.id)}>
+							Last visit date
+						</TableSortLabel>
+					</TableCell>
+					<TableCell numeric sortDirection={orderBy === row.id ? order : false}>
+						<TableSortLabel
+							active={orderBy === row.id}
+							direction={order}
+							onClick={this.createSortHandler(row.id)}>
+							Radius
+						</TableSortLabel>
+					</TableCell>
 				  </TableRow>
 				</TableHead>
 				<TableBody>
