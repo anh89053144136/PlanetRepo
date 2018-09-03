@@ -20,6 +20,8 @@ interface PlanetsViewState {
     loading: boolean;
 	order: string; 
 	orderBy: string;
+	page: number;
+    rowsPerPage: number;
 }
 
 export class PlanetsView extends React.Component<RouteComponentProps<{}>, PlanetsViewState> {
@@ -48,7 +50,9 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
 				{ name: "Neptune", lastVisitDate: "август 1989", radius: 24622 }
 			],
 			orderBy: "name",
-			order: "desc"
+			order: "desc",
+			page: 0,
+			rowsPerPage: 5
 		}
 		this.state = newState;
 		//this.setState(newState);
@@ -57,7 +61,7 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
     public render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : this.renderplanetsTable(this.state.planets, this.state.order, this.state.orderBy);
+            : this.renderplanetsTable(this.state.planets, this.state.order, this.state.orderBy, this.state.rowsPerPage, this.state.page);
 
         return <div>
 			<h1>Planet repository</h1>
@@ -76,7 +80,15 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
 		this.setState({ order, orderBy });
 	};
   
-    private renderplanetsTable(planets: PlanetRow[], order: any, orderBy: string) {
+	private handleChangePage(event: any, page: any) {
+		this.setState({ page });
+	};
+
+	private handleChangeRowsPerPage(event: any) {
+		this.setState({ rowsPerPage: event.target.value });
+	};
+  
+    private renderplanetsTable(planets: PlanetRow[], order: any, orderBy: string, rowsPerPage: number, page: number) {
 		return <Table>
 				<TableHead>
 				  <TableRow>
@@ -123,16 +135,15 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
 				  <TableRow>
 					<TablePagination
 					  colSpan={3}
-					  count={rows.length}
+					  count={21}
 					  rowsPerPage={rowsPerPage}
 					  page={page}
 					  onChangePage={this.handleChangePage}
 					  onChangeRowsPerPage={this.handleChangeRowsPerPage}
-					  ActionsComponent={TablePaginationActionsWrapped}
 					/>
 				  </TableRow>
             </TableFooter>
-			  </Table>;
+		</Table>;
     }
 }
 
