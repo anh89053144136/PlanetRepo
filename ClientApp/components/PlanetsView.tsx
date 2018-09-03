@@ -11,15 +11,18 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Tooltip from '@material-ui/core/Tooltip';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
 
 interface PlanetsViewState {
     planets: PlanetRow[];
     loading: boolean;
+	order: string; 
+	orderBy: string;
 }
 
 export class PlanetsView extends React.Component<RouteComponentProps<{}>, PlanetsViewState> {
-	
-	private orderBy: string;
 	
     constructor(props: any) {
         super(props);
@@ -43,7 +46,9 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
 				{ name: "Jupiter", lastVisitDate: "15 октября 1997", radius: 69911 },
 				{ name: "Uranus", lastVisitDate: "17 января 1986", radius: 25362 },
 				{ name: "Neptune", lastVisitDate: "август 1989", radius: 24622 }
-			]
+			],
+			orderBy: "name",
+			order: "desc"
 		}
 		this.state = newState;
 		//this.setState(newState);
@@ -52,7 +57,7 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
     public render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : PlanetsView.renderplanetsTable(this.state.planets);
+            : this.renderplanetsTable(this.state.planets, this.state.order, this.state.orderBy);
 
         return <div>
 			<h1>Planet repository</h1>
@@ -60,42 +65,42 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
         </div>;
     }
 
-	handleRequestSort = (property: any) => {
+	private handleRequestSort(property: any)  {
 		const orderBy = property;
 		let order = 'desc';
-
+		
 		if (this.state.orderBy === property && this.state.order === 'desc') {
 		  order = 'asc';
 		}
 
 		this.setState({ order, orderBy });
-	  };
+	};
   
-    private static renderplanetsTable(planets: PlanetRow[]) {
+    private renderplanetsTable(planets: PlanetRow[], order: any, orderBy: string) {
 		return <Table>
 				<TableHead>
 				  <TableRow>
-					<TableCell sortDirection={orderBy === row.id ? order : false}>
+					<TableCell>
 						<TableSortLabel
-							active={orderBy === row.id}
+							active={orderBy === "name"}
 							direction={order}
-							onClick={this.handleRequestSort(row.id)}>
+							onClick={(event) => { this.handleRequestSort("name")} }>
 							Name
 						</TableSortLabel>
 					</TableCell>
-					<TableCell sortDirection={orderBy === row.id ? order : false}>
+					<TableCell>
 						<TableSortLabel
-							active={orderBy === row.id}
+							active={orderBy === "lastVisitDate"}
 							direction={order}
-							onClick={this.createSortHandler(row.id)}>
+							onClick={(event) => { this.handleRequestSort("lastVisitDate")} }>
 							Last visit date
 						</TableSortLabel>
 					</TableCell>
-					<TableCell numeric sortDirection={orderBy === row.id ? order : false}>
+					<TableCell numeric>
 						<TableSortLabel
-							active={orderBy === row.id}
+							active={orderBy === "radius"}
 							direction={order}
-							onClick={this.createSortHandler(row.id)}>
+							onClick={(event) => { this.handleRequestSort("radius")} }>
 							Radius
 						</TableSortLabel>
 					</TableCell>
@@ -114,6 +119,19 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
 					);
 				  })}
 				</TableBody>
+				<TableFooter>
+				  <TableRow>
+					<TablePagination
+					  colSpan={3}
+					  count={rows.length}
+					  rowsPerPage={rowsPerPage}
+					  page={page}
+					  onChangePage={this.handleChangePage}
+					  onChangeRowsPerPage={this.handleChangeRowsPerPage}
+					  ActionsComponent={TablePaginationActionsWrapped}
+					/>
+				  </TableRow>
+            </TableFooter>
 			  </Table>;
     }
 }
