@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
-import 'isomorphic-fetch';
 
 //import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -15,31 +13,27 @@ import Tooltip from '@material-ui/core/Tooltip';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 
-interface PlanetsViewState {
-    planets: PlanetRow[];
-    loading: boolean;
-	order: string; 
-	orderBy: string;
-	page: number;
-    rowsPerPage: number;
+import { BaseTableState } from '../../base/BaseTableState';
+
+interface PlanetsViewState extends BaseTableState<PlanetRow> {
 }
 
-export class PlanetsView extends React.Component<RouteComponentProps<{}>, PlanetsViewState> {
+export class PlanetsTable extends React.Component<{}, PlanetsViewState> {
+	/*
+	componentDidMount() {
+		this.props.ref(this)
+	}
 	
+	componentWillUnmount() {
+		this.props.ref(undefined)
+	}
+	*/
     constructor(props: any) {
         super(props);
-        //this.state = { planets: [], loading: true };
 
-		/*
-        fetch('api/SampleData/Weatherplanets')
-            .then(response => response.json() as Promise<PlanetRow[]>)
-            .then(data => {
-                this.setState({ planets: data, loading: false });
-            });
-		*/
 		let newState = { 
 			loading: false,
-			planets: [
+			records: [
 				{ name: "Mercury", lastVisitDate: "2004", radius: 2439.7 },
 				{ name: "Venus", lastVisitDate: "1970", radius: 6051.8 },
 				{ name: "Earth", lastVisitDate: "", radius: 6371.8 },
@@ -59,17 +53,12 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
     }
 
     public render() {
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : this.renderplanetsTable(this.state.planets, this.state.order, this.state.orderBy, this.state.rowsPerPage, this.state.page);
-
-        return <div>
-			<h1>Planet repository</h1>
-            { contents }
-        </div>;
+        return this.renderPlanetsTable(this.state.records, this.state.order, this.state.orderBy, this.state.rowsPerPage, this.state.page);
     }
 
-	private handleRequestSort(property: any)  {
+	private handleRequestSort(property: any)  
+	{
+		debugger;
 		const orderBy = property;
 		let order = 'desc';
 		
@@ -88,7 +77,7 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
 		this.setState({ rowsPerPage: event.target.value });
 	};
   
-    private renderplanetsTable(planets: PlanetRow[], order: any, orderBy: string, rowsPerPage: number, page: number) {
+    private renderPlanetsTable(records: PlanetRow[], order: any, orderBy: string, rowsPerPage: number, page: number) {
 		return <Table>
 				<TableHead>
 				  <TableRow>
@@ -119,7 +108,7 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, Planet
 				  </TableRow>
 				</TableHead>
 				<TableBody>
-				  {planets.map(row => {
+				  {records.map(row => {
 					return (
 					  <TableRow key={row.name}>
 						<TableCell component="th" scope="row">
