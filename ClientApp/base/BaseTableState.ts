@@ -1,8 +1,7 @@
-export interface BaseTableState<T> {
+import { BaseSortingPaging } from './BaseSortingPaging';
+
+export interface BaseTableState<T> extends BaseSortingPaging {
     records: Array<T>;
     loading: boolean;
-	order: string; 
-	orderBy: string;
-	page: number;
-    rowsPerPage: number;
+	rowsCount: number;
 }

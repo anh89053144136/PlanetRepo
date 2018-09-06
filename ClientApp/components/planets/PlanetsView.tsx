@@ -5,6 +5,7 @@ import 'isomorphic-fetch';
 import Button from '@material-ui/core/Button';
 
 import { PlanetsTable } from './PlanetsTable';
+import { BaseSortingPaging } from '../../base/BaseSortingPaging';
 
 export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
 	private planetsTable: React.RefObject<PlanetsTable>;
@@ -23,6 +24,10 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
 		this.state = newState;
     }
 
+	private onTableStateChange(newState: BaseSortingPaging) {
+		debugger;
+	}
+	
     public render() {
 		/*
         let contents = this.planetsTable.state.loading
@@ -37,7 +42,7 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
 					Default
 				</Button>
 			</p>
-            <PlanetsTable ref={this.planetsTable}></PlanetsTable>
+            <PlanetsTable onChange={this.onTableStateChange}></PlanetsTable>
         </div>;
     }
 	

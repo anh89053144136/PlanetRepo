@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-//import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,24 +12,19 @@ import Tooltip from '@material-ui/core/Tooltip';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 
-import { BaseTableState } from '../../base/BaseTableState';
+import { PlanetsViewState } from './PlanetsViewState';
+import { PlanetRow } from './PlanetRow';
+import { BaseTableProps } from '../../base/BaseTableProps';
+import { BaseSortingPaging } from '../../base/BaseSortingPaging';
 
-interface PlanetsViewState extends BaseTableState<PlanetRow> {
-}
-
-export class PlanetsTable extends React.Component<{}, PlanetsViewState> {
-	/*
-	componentDidMount() {
-		this.props.ref(this)
-	}
+export class PlanetsTable extends React.Component<BaseTableProps, PlanetsViewState> {
+	private onChange: (newState: BaseSortingPaging) => void;
 	
-	componentWillUnmount() {
-		this.props.ref(undefined)
-	}
-	*/
     constructor(props: any) {
         super(props);
-
+		
+		this.onChange = props.onChange;
+		
 		let newState = { 
 			loading: false,
 			records: [
@@ -46,38 +40,59 @@ export class PlanetsTable extends React.Component<{}, PlanetsViewState> {
 			orderBy: "name",
 			order: "desc",
 			page: 0,
-			rowsPerPage: 5
+			rowsPerPage: 5,
+			rowsCount: 25
 		}
 		this.state = newState;
 		//this.setState(newState);
     }
 
     public render() {
-        return this.renderPlanetsTable(this.state.records, this.state.order, this.state.orderBy, this.state.rowsPerPage, this.state.page);
+        return this.renderPlanetsTable(this.state.records, this.state.order, this.state.orderBy, this.state.rowsPerPage, this.state.page, this.state.rowsCount);
     }
 
 	private handleRequestSort(property: any)  
 	{
-		debugger;
 		const orderBy = property;
 		let order = 'desc';
 		
 		if (this.state.orderBy === property && this.state.order === 'desc') {
 		  order = 'asc';
 		}
-
-		this.setState({ order, orderBy });
+		
+		if(!this.onChange) return;
+			
+		this.onChange({
+			order: order,
+			orderBy: orderBy,
+			page: this.state.page,
+			rowsPerPage: this.state.rowsPerPage
+		});
 	};
   
 	private handleChangePage(event: any, page: any) {
-		this.setState({ page });
+		if(!this.onChange) return;
+		
+		this.onChange({
+			order: this.state.order,
+			orderBy: this.state.orderBy,
+			page: page,
+			rowsPerPage: this.state.rowsPerPage
+		});
 	};
 
 	private handleChangeRowsPerPage(event: any) {
-		this.setState({ rowsPerPage: event.target.value });
+		if(!this.onChange) return;
+		
+		this.onChange({
+			order: this.state.order,
+			orderBy: this.state.orderBy,
+			page: this.state.page,
+			rowsPerPage: event.target.value
+		});
 	};
   
-    private renderPlanetsTable(records: PlanetRow[], order: any, orderBy: string, rowsPerPage: number, page: number) {
+    private renderPlanetsTable(records: PlanetRow[], order: any, orderBy: string, rowsPerPage: number, page: number, rowsCount: number) {
 		return <Table>
 				<TableHead>
 				  <TableRow>
@@ -124,20 +139,14 @@ export class PlanetsTable extends React.Component<{}, PlanetsViewState> {
 				  <TableRow>
 					<TablePagination
 					  colSpan={3}
-					  count={21}
+					  count={rowsCount}
 					  rowsPerPage={rowsPerPage}
 					  page={page}
-					  onChangePage={this.handleChangePage}
-					  onChangeRowsPerPage={this.handleChangeRowsPerPage}
+					  onChangePage={(event, page) => {this.handleChangePage(event, page)}}
+					  onChangeRowsPerPage={(event) => { this.handleChangeRowsPerPage(event)}}
 					/>
 				  </TableRow>
             </TableFooter>
 		</Table>;
     }
-}
-
-interface PlanetRow {
-    name: string;
-    lastVisitDate: string;
-    radius: number;
 }
