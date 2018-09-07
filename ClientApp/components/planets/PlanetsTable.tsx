@@ -12,12 +12,13 @@ import Tooltip from '@material-ui/core/Tooltip';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 
-import { PlanetsViewState } from './PlanetsViewState';
+import { PlanetsTableState } from './PlanetsTableState';
 import { PlanetRow } from './PlanetRow';
 import { BaseTableProps } from '../../base/BaseTableProps';
 import { BaseSortingPaging } from '../../base/BaseSortingPaging';
+import { PlanetsModel } from './PlanetsModel';
 
-export class PlanetsTable extends React.Component<BaseTableProps, PlanetsViewState> {
+export class PlanetsTable extends React.Component<BaseTableProps, PlanetsTableState> {
 	private onChange: (newState: BaseSortingPaging) => void;
 	
     constructor(props: any) {
@@ -25,25 +26,7 @@ export class PlanetsTable extends React.Component<BaseTableProps, PlanetsViewSta
 		
 		this.onChange = props.onChange;
 		
-		let newState = { 
-			loading: false,
-			records: [
-				{ name: "Mercury", lastVisitDate: "2004", radius: 2439.7 },
-				{ name: "Venus", lastVisitDate: "1970", radius: 6051.8 },
-				{ name: "Earth", lastVisitDate: "", radius: 6371.8 },
-				{ name: "Mars", lastVisitDate: "1980", radius: 3389.5 },
-				{ name: "Saturn", lastVisitDate: "August 11, 2009", radius: 58232 },
-				{ name: "Jupiter", lastVisitDate: "15 октября 1997", radius: 69911 },
-				{ name: "Uranus", lastVisitDate: "17 января 1986", radius: 25362 },
-				{ name: "Neptune", lastVisitDate: "август 1989", radius: 24622 }
-			],
-			orderBy: "name",
-			order: "desc",
-			page: 0,
-			rowsPerPage: 5,
-			rowsCount: 25
-		}
-		this.state = newState;
+		this.state = new PlanetsModel().GetList();
 		//this.setState(newState);
     }
 
