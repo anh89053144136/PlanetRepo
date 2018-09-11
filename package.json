@@ -30,6 +30,8 @@
     "webpack": "4.17.1",
     "webpack-hot-middleware": "2.18.2",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
-    "@types/webpack-env": "1.13.6"
+    "@types/webpack-env": "1.13.6",
+    "fbemitter": "2.1.1",
+    "@types/fbemitter": "2.0.32"
   }
 }

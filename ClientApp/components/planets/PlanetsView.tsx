@@ -6,10 +6,16 @@ import Button from '@material-ui/core/Button';
 
 import { PlanetsTable } from './PlanetsTable';
 import { BaseSortingPaging } from '../../base/BaseSortingPaging';
+import { PlanetsModel } from './PlanetsModel';
+import { PlanetsController } from './PlanetsController';
+import { PlanetsTableState } from './PlanetsTableState';
 
 export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
-	private planetsTable: React.RefObject<PlanetsTable>;
-    constructor(props: any) {
+	//planetsTable: PlanetsTable;
+	model: PlanetsModel;
+	controller: PlanetsController;
+    
+	constructor(props: any) {
         super(props);
         //this.state = { records: [], loading: true };
 
@@ -20,13 +26,21 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
                 this.setState({ records: data, loading: false });
             });
 		*/
-		let newState = {};
-		this.state = newState;
+		//this.planetsTable = new PlanetsTable({onChange: this.onTableStateChange});
+		
+		this.model = new PlanetsModel();
+		this.controller = new PlanetsController(this.model);
+		
+		this.model.addListener(this.onTableStateChange);
     }
-
-	private onTableStateChange(newState: BaseSortingPaging) {
+	
+	private onModelChange(newState: PlanetsTableState) {
 		debugger;
 	}
+	
+	private onTableStateChange(newState: BaseSortingPaging) {
+		debugger;
+	} 
 	
     public render() {
 		/*
@@ -47,7 +61,7 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
     }
 	
 	handleClick(e: any) {
-		let p = this.planetsTable;
+		//let p = this.planetsTable;
 		debugger;
 	}
 }

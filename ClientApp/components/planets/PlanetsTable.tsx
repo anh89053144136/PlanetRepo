@@ -16,7 +16,6 @@ import { PlanetsTableState } from './PlanetsTableState';
 import { PlanetRow } from './PlanetRow';
 import { BaseTableProps } from '../../base/BaseTableProps';
 import { BaseSortingPaging } from '../../base/BaseSortingPaging';
-import { PlanetsModel } from './PlanetsModel';
 
 export class PlanetsTable extends React.Component<BaseTableProps, PlanetsTableState> {
 	private onChange: (newState: BaseSortingPaging) => void;
@@ -26,11 +25,14 @@ export class PlanetsTable extends React.Component<BaseTableProps, PlanetsTableSt
 		
 		this.onChange = props.onChange;
 		
-		this.state = new PlanetsModel().GetList();
+		//this.state = new PlanetsModel().GetList();
 		//this.setState(newState);
     }
 
     public render() {
+		if(this.state == null)
+			return <p><em>No records...</em></p>;
+		
         return this.renderPlanetsTable(this.state.records, this.state.order, this.state.orderBy, this.state.rowsPerPage, this.state.page, this.state.rowsCount);
     }
 
@@ -76,7 +78,7 @@ export class PlanetsTable extends React.Component<BaseTableProps, PlanetsTableSt
 	};
   
     private renderPlanetsTable(records: PlanetRow[], order: any, orderBy: string, rowsPerPage: number, page: number, rowsCount: number) {
-		return <Table>
+        return <Table>
 				<TableHead>
 				  <TableRow>
 					<TableCell>
