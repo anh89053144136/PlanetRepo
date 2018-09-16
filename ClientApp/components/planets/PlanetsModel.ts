@@ -16,7 +16,6 @@ export class PlanetsModel {
 	
 	public setPlanets(newState: PlanetsTableState) {
 		this.currentState = newState;
-		
 		this.emitter.emit(this.eventType, newState);
 	}
 	

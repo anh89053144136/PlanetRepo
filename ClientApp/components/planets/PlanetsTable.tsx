@@ -24,8 +24,15 @@ export class PlanetsTable extends React.Component<BaseTableProps, PlanetsTableSt
         super(props);
 		
 		this.onChange = props.onChange;
-		
-		//this.state = new PlanetsModel().GetList();
+		this.state = {
+			loading: false,
+			records: [],
+			orderBy: "name",
+			order: "desc",
+			page: 0,
+			rowsPerPage: 5,
+			rowsCount: 0
+		};
 		//this.setState(newState);
     }
 
