@@ -27,8 +27,8 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
             });
 		*/
 		this.planetsTable = React.createRef();
-debugger;
-		//this.model.addListener(this.onModelChange);
+		debugger;
+		this.model.addListener((e:any) => { this.onModelChange(e) });
 		this.controller = new PlanetsController(this.model);
 		
 		//this.planetsTable.setState({});
@@ -36,10 +36,11 @@ debugger;
 	
 	private onModelChange(newState: PlanetsTableState) {
 		//this.setState(newState);
-		this.planetsTable.current.setState(newState);
+		//this.planetsTable.current.setState(newState);
 	}
 	
 	private onTableStateChange(newState: BaseSortingPaging) {
+		this.controller.setNewPage(newState);
 	} 
 	
     public render() {
@@ -56,7 +57,7 @@ debugger;
 					Default
 				</Button>
 			</p>
-            <PlanetsTable ref={this.planetsTable} onChange={this.onTableStateChange}></PlanetsTable>
+            <PlanetsTable ref={this.planetsTable} onChange={(e) => this.onTableStateChange(e)}></PlanetsTable>
         </div>;
     }
 	

@@ -33,7 +33,9 @@ export class PlanetsTable extends React.Component<BaseTableProps, PlanetsTableSt
 			rowsPerPage: 5,
 			rowsCount: 0
 		};
+		
 		//this.setState(newState);
+		if(this.onChange) this.onChange(this.state);
     }
 
     public render() {

@@ -29,8 +29,13 @@ export class PlanetsController {
 			];
 			
 	constructor(private model: PlanetsModel) {
-		
-		let newState: PlanetsTableState =
+		/*
+		model.setPlanets(newState);
+		*/
+	}
+	
+	setNewPage(newState: BaseSortingPaging) {
+		let newPage: PlanetsTableState =
 		{
 			loading: false,
 			records: this.allPlanets,
@@ -41,6 +46,6 @@ export class PlanetsController {
 			rowsCount: this.allPlanets.length
 		};
 		
-		model.setPlanets(newState);
+		this.model.setPlanets(newPage);
 	}
 }
