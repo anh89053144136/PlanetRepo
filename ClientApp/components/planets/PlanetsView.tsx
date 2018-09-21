@@ -9,6 +9,7 @@ import { BaseSortingPaging } from '../../base/BaseSortingPaging';
 import { PlanetsModel } from './PlanetsModel';
 import { PlanetsController } from './PlanetsController';
 import { PlanetsTableState } from './PlanetsTableState';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
 	model: PlanetsModel = new PlanetsModel();
@@ -27,16 +28,14 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
             });
 		*/
 		this.planetsTable = React.createRef();
-		debugger;
 		this.model.addListener((e:any) => { this.onModelChange(e) });
 		this.controller = new PlanetsController(this.model);
-		
+
 		//this.planetsTable.setState({});
     }
 	
 	private onModelChange(newState: PlanetsTableState) {
-		//this.setState(newState);
-		//this.planetsTable.current.setState(newState);
+		this.planetsTable.current.setState(newState);
 	}
 	
 	private onTableStateChange(newState: BaseSortingPaging) {
@@ -44,24 +43,35 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
 	} 
 	
     public render() {
-		/*
-        let contents = this.planetsTable.state.loading
-            ? <p><em>Loading...</em></p>
-            : this.planetsTable.render();
-*/
-//ref={ref => (this.planetsTable = ref)}
         return <div>
 			<h1>Planet repository</h1> 
 			<p>
 				<Button variant="outlined" onClick={(e) => this.handleClick(e)}>
-					Default
+					<AddCircleOutlineIcon />  Default
 				</Button>
 			</p>
             <PlanetsTable ref={this.planetsTable} onChange={(e) => this.onTableStateChange(e)}></PlanetsTable>
         </div>;
     }
 	
+	public componentDidMount() {
+		this.controller.setNewPage({
+			orderBy: "name",
+			order: "desc",
+			page: 0,
+			rowsPerPage: 5
+		});
+	}
+	
 	handleClick(e: any) {
+		this.controller.setNewPage({
+			orderBy: "name",
+			order: "desc",
+			page: 0,
+			rowsPerPage: 5
+		});
+		
+		/*
 		this.planetsTable.current.setState({
 			loading: false,
 			records: [
@@ -78,5 +88,6 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
 		});
 		
 		this.model.addListener(this.onModelChange);
+		*/
 	}
 }

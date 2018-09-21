@@ -6,7 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import StorageIcon from '@material-ui/icons/Storage';
 
 export interface LayoutProps {
     children?: React.ReactNode;
@@ -18,7 +18,7 @@ export class Layout extends React.Component<LayoutProps, {}> {
 				<AppBar position="static">
 					<Toolbar variant="dense">
 					  <IconButton color="inherit" aria-label="Menu">
-						<MenuIcon />
+						<StorageIcon />
 					  </IconButton>
 					  <Typography variant="title" color="inherit">
 						Planets

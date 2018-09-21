@@ -29,20 +29,17 @@ export class PlanetsController {
 			];
 			
 	constructor(private model: PlanetsModel) {
-		/*
-		model.setPlanets(newState);
-		*/
 	}
 	
 	setNewPage(newState: BaseSortingPaging) {
 		let newPage: PlanetsTableState =
 		{
 			loading: false,
-			records: this.allPlanets,
-			orderBy: "name",
-			order: "desc",
-			page: 0,
-			rowsPerPage: 5,
+			records: this.allPlanets.slice(newState.page*newState.rowsPerPage, newState.page*newState.rowsPerPage + newState.rowsPerPage),
+			orderBy: newState.orderBy,
+			order: newState.order,
+			page: newState.page,
+			rowsPerPage: newState.rowsPerPage,
 			rowsCount: this.allPlanets.length
 		};
 		
