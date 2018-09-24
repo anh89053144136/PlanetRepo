@@ -43,11 +43,12 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
 	} 
 	
     public render() {
+		//large
         return <div>
 			<h1>Planet repository</h1> 
 			<p>
 				<Button variant="extendedFab" onClick={(e) => this.handleClick(e)}>
-					<AddCircleOutlineIcon fontSize="large"/> Add
+					<AddCircleOutlineIcon/> Add
 				</Button>
 			</p>
             <PlanetsTable ref={this.planetsTable} onChange={(e) => this.onTableStateChange(e)}></PlanetsTable>

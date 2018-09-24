@@ -8,6 +8,15 @@ export class PlanetsModel {
 	
 	constructor() {
 		this.emitter = new EventEmitter();
+		this.currentState = { 
+			records:[],
+			loading: false,
+			rowsCount: 0,
+			order: "",
+			orderBy: "",
+			page: 0,
+			rowsPerPage:0
+		};
 	}
 
 	public addListener(fn: Function) {
