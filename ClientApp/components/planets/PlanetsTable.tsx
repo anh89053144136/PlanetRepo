@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,6 +13,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 
+//import * as CSS from 'csstype';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -21,6 +21,10 @@ import { PlanetsTableState } from './PlanetsTableState';
 import { PlanetRow } from './PlanetRow';
 import { BaseTableProps } from '../../base/BaseTableProps';
 import { BaseSortingPaging } from '../../base/BaseSortingPaging';
+
+const loading_container = {
+	textAlign: "center"
+} as React.CSSProperties;
 
 export class PlanetsTable extends React.Component<BaseTableProps, PlanetsTableState> {
 	private onChange: (newState: BaseSortingPaging) => void;
@@ -42,7 +46,15 @@ export class PlanetsTable extends React.Component<BaseTableProps, PlanetsTableSt
 
     public render() {
 		let tableBody = (this.state == null || this.state.records.length ==0 || this.state.loading == true) ? 
-			<TableBody><TableRow><TableCell><CircularProgress /></TableCell></TableRow></TableBody>:
+			<TableBody>
+				<TableRow>
+					<TableCell colSpan={4}>
+						<div style={loading_container}>
+							<CircularProgress />
+						</div>
+					</TableCell>
+				</TableRow>
+			</TableBody>:
 			<TableBody>
 				  {this.state.records.map(row => {
 					return (
