@@ -13,8 +13,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 
-//import * as CSS from 'csstype';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { PlanetsTableState } from './PlanetsTableState';
@@ -65,11 +64,11 @@ export class PlanetsTable extends React.Component<BaseTableProps, PlanetsTableSt
 						<TableCell numeric>{row.lastVisitDate}</TableCell>
 						<TableCell numeric>{row.radius}</TableCell>
 						<TableCell>
-							<Button variant="fab">
+							<Button variant="fab" href={"#/planetitem/" + row.id}>
 								<EditIcon />
 							</Button>
 							<Button variant="fab">
-								<RemoveCircleOutlineIcon />
+								<DeleteForeverIcon />
 							</Button>
 						</TableCell>
 					  </TableRow>

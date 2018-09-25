@@ -47,7 +47,7 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
         return <div>
 			<h1>Planet repository</h1> 
 			<p>
-				<Button variant="extendedFab" onClick={(e) => this.handleClick(e)}>
+				<Button variant="extendedFab" href="#/planetitem">
 					<AddCircleOutlineIcon/> Add
 				</Button>
 			</p>
@@ -62,33 +62,5 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
 			page: 0,
 			rowsPerPage: 5
 		});
-	}
-	
-	handleClick(e: any) {
-		this.controller.setNewPage({
-			orderBy: "name",
-			order: "desc",
-			page: 0,
-			rowsPerPage: 5
-		});
-		
-		/*
-		this.planetsTable.current.setState({
-			loading: false,
-			records: [
-				{ name: "Mercury", lastVisitDate: "2004", radius: 2439.7 },
-				{ name: "Venus", lastVisitDate: "1970", radius: 6051.8 },
-				{ name: "Earth", lastVisitDate: "", radius: 6371.8 },
-				{ name: "Mars", lastVisitDate: "1980", radius: 3389.5 }
-			],
-			orderBy: "name",
-			order: "desc",
-			page: 0,
-			rowsPerPage: 5,
-			rowsCount: 4
-		});
-		
-		this.model.addListener(this.onModelChange);
-		*/
 	}
 }
