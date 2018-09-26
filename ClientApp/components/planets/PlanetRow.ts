@@ -1,6 +1,6 @@
 export interface PlanetRow {
 	id: number;
     name: string;
-    lastVisitDate: string;
+    lastVisitDate: Date | null;
     radius: number;
 }

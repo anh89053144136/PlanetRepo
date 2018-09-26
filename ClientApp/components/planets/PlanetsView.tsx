@@ -2,6 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Button from '@material-ui/core/Button';
 
 import { PlanetsTable } from './PlanetsTable';
@@ -9,7 +10,6 @@ import { BaseSortingPaging } from '../../base/BaseSortingPaging';
 import { PlanetsModel } from './PlanetsModel';
 import { PlanetsController } from './PlanetsController';
 import { PlanetsTableState } from './PlanetsTableState';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
 	model: PlanetsModel = new PlanetsModel();
@@ -47,7 +47,7 @@ export class PlanetsView extends React.Component<RouteComponentProps<{}>, {}> {
         return <div>
 			<h1>Planet repository</h1> 
 			<p>
-				<Button variant="extendedFab" href="#/planetitem">
+				<Button variant="extendedFab" href="#/planetitem/0">
 					<AddCircleOutlineIcon/> Add
 				</Button>
 			</p>

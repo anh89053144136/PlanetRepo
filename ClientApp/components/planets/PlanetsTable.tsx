@@ -12,6 +12,7 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
@@ -56,20 +57,28 @@ export class PlanetsTable extends React.Component<BaseTableProps, PlanetsTableSt
 			</TableBody>:
 			<TableBody>
 				  {this.state.records.map(row => {
+					var lastVisitDate = row.lastVisitDate?row.lastVisitDate.toISOString().slice(0,10):"";
+					
 					return (
 					  <TableRow key={row.name}>
 						<TableCell component="th" scope="row">
 						  {row.name}
 						</TableCell>
-						<TableCell numeric>{row.lastVisitDate}</TableCell>
+						<TableCell>{lastVisitDate}</TableCell>
 						<TableCell numeric>{row.radius}</TableCell>
-						<TableCell>
-							<Button variant="fab" href={"#/planetitem/" + row.id}>
-								<EditIcon />
-							</Button>
-							<Button variant="fab">
-								<DeleteForeverIcon />
-							</Button>
+						<TableCell numeric>
+							<Grid container spacing={8}>
+								<Grid item>
+									<Button variant="fab" href={"#/planetitem/" + row.id}>
+										<EditIcon />
+									</Button>
+								</Grid>
+								<Grid item>
+									<Button variant="fab">
+										<DeleteForeverIcon />
+									</Button>
+								</Grid>
+							</Grid>
 						</TableCell>
 					  </TableRow>
 					);
