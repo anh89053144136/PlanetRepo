@@ -27,12 +27,29 @@ export class PlanetItemView extends React.Component<RouteComponentProps<{}>, Pla
 		};
     }
 	
-	handleChange(name: string, event: any) {
-		//this.setState({
-		//	[name]: event.target.value
-		//});
+	handleChangeName(event: any) {
+		// some validation
+		this.setState({
+			name: event.target.value
+		});
 	};
   
+	handleChangeLastVisitDate(event: any) {
+		// some validation
+		var date = new Date(Date.parse(event.target.value));
+		
+		this.setState({
+			lastVisitDate: date
+		});
+	};
+	
+	handleChangeRadius(event: any) {
+		// some validation
+		this.setState({
+			radius: (event.target.value as number)
+		});
+	};
+	
     public render() {
 		var lastVisitDate = this.state.lastVisitDate?this.state.lastVisitDate.toISOString().slice(0,10):"";
 		
@@ -45,17 +62,17 @@ export class PlanetItemView extends React.Component<RouteComponentProps<{}>, Pla
 						<ListItem>
 							<TextField id="planet-name" label="Name" margin="normal" 
 								value={this.state.name} 
-								onChange={(e) => this.handleChange('name', e)} />
+								onChange={(e) => this.handleChangeName(e)} />
 						</ListItem>
 						<ListItem>
 							<TextField id="planet-last-visit" label="Last visit date" margin="normal" type="date" 
 								value={lastVisitDate} 
-								onChange={(e) => this.handleChange('lastVisitDate', e)} />
+								onChange={(e) => this.handleChangeLastVisitDate(e)} />
 						</ListItem>
 						<ListItem>
 							<TextField id="planet-radius" label="Radius" type="number" margin="normal" 
 								value={this.state.radius}
-								onChange={(e) => this.handleChange('radius', e)} />
+								onChange={(e) => this.handleChangeRadius(e)} />
 						</ListItem>
 					 </List>
 				</Paper>
