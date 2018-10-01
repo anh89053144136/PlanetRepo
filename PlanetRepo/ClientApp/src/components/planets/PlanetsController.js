@@ -5,6 +5,8 @@ import { PlanetRow } from './PlanetRow';
 import { PlanetsModel } from './PlanetsModel';
 import { PlanetsTableState } from './PlanetsTableState';
 
+import React from 'react';
+
 var allPlanets = [
 	{ id: 1, name: "Mercury", lastVisitDate: new Date(2004, 0, 1), radius: 2439.7 },
 	{ id: 2, name: "Venus", lastVisitDate: new Date(1970, 0, 1), radius: 6051.8 },
@@ -33,7 +35,20 @@ export class PlanetsController {
         this.model = model;
 	}
 	
-	setNewPage(newState) {
+    setNewPage(newState) {
+        fetch('api/Planets/List?orderBy=name', {
+                method: "GET",
+                //body: JSON.stringify(newState),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                debugger;
+                //this.setState({ forecasts: data, loading: false });
+            });
+
 		let newPage =
 		{
 			loading: false,
