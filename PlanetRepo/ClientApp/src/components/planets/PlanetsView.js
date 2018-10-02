@@ -17,15 +17,7 @@ export class PlanetsView extends React.Component {
 	
 	constructor(props) {
         super(props);
-        //this.state = { records: [], loading: true };
 
-		/*
-        fetch('api/SampleData/Weatherrecords')
-            .then(response => response.json() as Promise<PlanetRow[]>)
-            .then(data => {
-                this.setState({ records: data, loading: false });
-            });
-		*/
         this.model = new PlanetsModel();
 		this.planetsTable = React.createRef();
 		this.model.addListener((e) => { this.onModelChange(e) });

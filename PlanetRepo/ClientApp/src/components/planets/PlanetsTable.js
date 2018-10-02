@@ -57,7 +57,7 @@ export class PlanetsTable extends React.Component {
 			</TableBody>:
 			<TableBody>
 				  {this.state.records.map(row => {
-					var lastVisitDate = row.lastVisitDate?row.lastVisitDate.toISOString().slice(0,10):"";
+                    var lastVisitDate = row.lastVisitDate && row.lastVisitDate.toISOString ? row.lastVisitDate.toISOString().slice(0, 10) : row.lastVisitDate;
 					
 					return (
 					  <TableRow key={row.name}>

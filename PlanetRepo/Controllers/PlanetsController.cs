@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PlanetRepo.Entities;
+using PlanetRepo.Models;
 
 namespace PlanetRepo.Controllers
 {
@@ -33,9 +34,12 @@ namespace PlanetRepo.Controllers
         };
 
         [HttpGet("[action]")]
-        public IEnumerable<Planet> List(string orderBy, string order, int page, int rowsPerPage)
+        public PageModel<Planet> List(string orderBy, string order, int page, int rowsPerPage)
         {
-            return planets.OrderBy(;
+            return new PageModel<Planet>() {
+                records = planets.Skip(page * rowsPerPage).Take(rowsPerPage),
+                recordCount = planets.Count()
+            };
         }
     }
 }

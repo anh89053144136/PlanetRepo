@@ -36,30 +36,27 @@ export class PlanetsController {
 	}
 	
     setNewPage(newState) {
-        fetch('api/Planets/List?orderBy=name', {
-                method: "GET",
-                //body: JSON.stringify(newState),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                debugger;
-                //this.setState({ forecasts: data, loading: false });
-            });
+        var url = "api/Planets/List?" +
+            "orderBy=" + encodeURIComponent(newState.orderBy) +
+            "&order=" + encodeURIComponent(newState.order) +
+            "&page=" + encodeURIComponent(newState.page) +
+            "&rowsPerPage=" + encodeURIComponent(newState.rowsPerPage);
 
-		let newPage =
-		{
-			loading: false,
-			records: allPlanets.slice(newState.page*newState.rowsPerPage, newState.page*newState.rowsPerPage + newState.rowsPerPage),
-			orderBy: newState.orderBy,
-			order: newState.order,
-			page: newState.page,
-			rowsPerPage: newState.rowsPerPage,
-			rowsCount: allPlanets.length
-		};
-		
-		this.model.setPlanets(newPage);
+        fetch(url).then(response => response.json())
+
+            .then(data => {
+                let newPage =
+                {
+                    loading: false,
+                    records: data.records,
+                    orderBy: newState.orderBy,
+                    order: newState.order,
+                    page: newState.page,
+                    rowsPerPage: newState.rowsPerPage,
+                    rowsCount: data.recordCount
+                };
+
+                this.model.setPlanets(newPage);
+            });
 	}
 }
