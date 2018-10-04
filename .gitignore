@@ -1,6 +1,4 @@
 /node_modules/*
 /wwwroot/*
-/bin/*
-/obj/*
 /PlenetRepoTests/bin/*
 /PlenetRepoTests/obj/*

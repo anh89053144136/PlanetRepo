@@ -7,7 +7,7 @@ using FluentMigrator.Runner.Initialization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace PlenetRepoTests
+namespace PlanetRepoTests
 {
     [TestClass]
     public class DBCreator
@@ -17,8 +17,6 @@ namespace PlenetRepoTests
         {
             var serviceProvider = CreateServices();
 
-            // Put the database update into a scope to ensure
-            // that all resources will be disposed.
             using (var scope = serviceProvider.CreateScope())
             {
                 UpdateDatabase(scope.ServiceProvider);
@@ -28,18 +26,12 @@ namespace PlenetRepoTests
         private IServiceProvider CreateServices()
         {
             return new ServiceCollection()
-                // Add common FluentMigrator services
                 .AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
-                    // Add SQLite support to FluentMigrator
-                    .AddSQLite()
-                    // Set the connection string
-                    .WithGlobalConnectionString("Data Source=test.db")
-                    // Define the assembly containing the migrations
+                    .AddSqlServer2016()
+                    .WithGlobalConnectionString("Server=.;Database=PlanetRepo;User Id=PlanetRepoUser;Password=123;")
                     .ScanIn(typeof(PlanetRepo.Program).Assembly).For.Migrations())
-                // Enable logging to console in the FluentMigrator way
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
-                // Build the service provider
                 .BuildServiceProvider(false);
         }
 
@@ -48,10 +40,7 @@ namespace PlenetRepoTests
         /// </sumamry>
         private void UpdateDatabase(IServiceProvider serviceProvider)
         {
-            // Instantiate the runner
             var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
-
-            // Execute the migrations
             runner.MigrateUp();
         }
     }
