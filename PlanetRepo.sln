@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanetRepo", "PlanetRepo\PlanetRepo.csproj", "{978F341B-0090-4F82-B5E3-B58E137CFE9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlenetRepoTests", "PlenetRepoTests\PlenetRepoTests.csproj", "{4EAD023D-A5AA-4F57-85F5-C0A58B7D938C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlenetRepoTests", "PlenetRepoTests\PlenetRepoTests.csproj", "{4EAD023D-A5AA-4F57-85F5-C0A58B7D938C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

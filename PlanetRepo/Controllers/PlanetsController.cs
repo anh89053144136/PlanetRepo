@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PlanetRepo.Entities;
 using PlanetRepo.Models;
+using PlanetRepo.Infrastructure;
 
 namespace PlanetRepo.Controllers
 {
@@ -32,6 +33,13 @@ namespace PlanetRepo.Controllers
             new Planet() { id= 18, name= "GD 66 b", lastVisitDate= new DateTime(1989, 7, 1), radius= 24622 },
             new Planet() { id= 19, name= "HD 188753 Ab", lastVisitDate= new DateTime(1989, 7, 1), radius= 24622 }
         };
+
+        private NHibernateHelper helper;
+
+        public PlanetsController(NHibernateHelper helper)
+        {
+            this.helper = helper;
+        }
 
         [HttpGet("[action]")]
         public PageModel<Planet> List(string orderBy, string order, int page, int rowsPerPage)
