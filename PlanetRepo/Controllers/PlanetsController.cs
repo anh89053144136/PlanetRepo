@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using PlanetRepo.Entities;
 using PlanetRepo.Models;
 using PlanetRepo.Infrastructure;
+using Microsoft.AspNetCore.Http;
 
 namespace PlanetRepo.Controllers
 {
@@ -35,10 +36,12 @@ namespace PlanetRepo.Controllers
         };
 
         private NHibernateHelper helper;
-
+        //Microsoft.AspNetCore.Http.HttpContext context
         public PlanetsController(NHibernateHelper helper)
         {
             this.helper = helper;
+
+            var session = helper.GetCurrentSession();
         }
 
         [HttpGet("[action]")]

@@ -31,10 +31,8 @@ namespace PlanetRepo
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             //services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
-            //services.AddHttpClient<NHibernateHelper>();
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

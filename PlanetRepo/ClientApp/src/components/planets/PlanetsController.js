@@ -43,7 +43,6 @@ export class PlanetsController {
             "&rowsPerPage=" + encodeURIComponent(newState.rowsPerPage);
 
         fetch(url).then(response => response.json())
-
             .then(data => {
                 let newPage =
                 {
