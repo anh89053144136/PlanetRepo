@@ -40,13 +40,14 @@ namespace PlanetRepo.Controllers
         public PlanetsController(NHibernateHelper helper)
         {
             this.helper = helper;
-
-            var session = helper.GetCurrentSession();
         }
 
         [HttpGet("[action]")]
         public PageModel<Planet> List(string orderBy, string order, int page, int rowsPerPage)
         {
+            var session = this.helper.GetCurrentSession();
+            var planet1 = session.Query<Planet>().FirstOrDefault();
+
             return new PageModel<Planet>() {
                 records = planets.Skip(page * rowsPerPage).Take(rowsPerPage),
                 recordCount = planets.Count()

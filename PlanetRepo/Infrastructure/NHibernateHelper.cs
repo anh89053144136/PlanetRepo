@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Web;
+using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Dialect;
@@ -22,17 +24,11 @@ namespace PlanetRepo.Infrastructure
 
         public NHibernateHelper(Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor)
         {
-            Configuration configuration = new Configuration();
-            configuration.DataBaseIntegration(db =>
-            {
-                db.ConnectionString = @"Server=.;Database=PlanetRepo;User Id=PlanetRepoUser;Password=123;";
-                db.Dialect<MsSql2008Dialect>();
-                db.Driver<Sql2008ClientDriver>();
-            });
-            //.AddMapping(domainMapping);
-            configuration.SessionFactory().GenerateStatistics();
+            _sessionFactory = Fluently.Configure()
+             .Database(MsSqlConfiguration.MsSql2012.ConnectionString(@"Server=.;Database=PlanetRepo;User Id=PlanetRepoUser;Password=123;"))
+             .Mappings(m => m.FluentMappings.AddFromAssemblyOf<NHibernate.Cfg.Mappings>())
+             .BuildSessionFactory();
 
-            _sessionFactory = configuration.BuildSessionFactory();
             this.context = httpContextAccessor.HttpContext;
         }
 
