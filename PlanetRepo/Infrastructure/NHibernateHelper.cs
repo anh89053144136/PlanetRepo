@@ -27,6 +27,7 @@ namespace PlanetRepo.Infrastructure
             _sessionFactory = Fluently.Configure()
              .Database(MsSqlConfiguration.MsSql2012.ConnectionString(@"Server=.;Database=PlanetRepo;User Id=PlanetRepoUser;Password=123;"))
              .Mappings(m => m.FluentMappings.AddFromAssemblyOf<NHibernate.Cfg.Mappings>())
+             .Mappings(m => m.FluentMappings.AddFromAssemblyOf<PlanetRepo.Program>())
              .BuildSessionFactory();
 
             this.context = httpContextAccessor.HttpContext;

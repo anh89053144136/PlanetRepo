@@ -45,11 +45,11 @@ namespace PlanetRepo.Controllers
         [HttpGet("[action]")]
         public PageModel<Planet> List(string orderBy, string order, int page, int rowsPerPage)
         {
-            var session = this.helper.GetCurrentSession();
-            var planet1 = session.Query<Planet>().FirstOrDefault();
+            //var session = this.helper.GetCurrentSession();
+            //var planet1 = session.Query<Planet>().FirstOrDefault();
 
             return new PageModel<Planet>() {
-                records = planets.Skip(page * rowsPerPage).Take(rowsPerPage),
+                records = planets.AsQueryable().ApplyOrder(orderBy, order).Skip(page * rowsPerPage).Take(rowsPerPage),
                 recordCount = planets.Count()
             };
         }

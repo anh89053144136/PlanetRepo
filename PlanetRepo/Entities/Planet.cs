@@ -7,9 +7,9 @@ namespace PlanetRepo.Entities
 {
     public class Planet
     {
-        public int id { set; get; }
-        public string name { set; get; }
-        public DateTime? lastVisitDate { set; get; }
-        public double radius { set; get; }
+        public virtual int id { set; get; }
+        public virtual string name { set; get; }
+        public virtual DateTime? lastVisitDate { set; get; }
+        public virtual double radius { set; get; }
     }
 }

@@ -10,6 +10,8 @@ namespace PlanetRepo.Mapping
     {
         public PlanetMap()
         {
+            Table("Planets");
+
             Id(x => x.id);
 
             Map(x => x.name);
