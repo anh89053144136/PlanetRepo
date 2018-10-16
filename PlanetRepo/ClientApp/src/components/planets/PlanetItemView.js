@@ -40,7 +40,9 @@ export class PlanetItemView extends React.Component {
 		
 		this.setState({
 			lastVisitDate: date
-		});
+        });
+
+        debugger;
 	};
 	
 	handleChangeRadius(event) {
