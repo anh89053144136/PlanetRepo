@@ -12,13 +12,16 @@ import Grid from '@material-ui/core/Grid';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SaveIcon from '@material-ui/icons/Save';
 
-import { PlanetRow } from './PlanetRow';
+import { PlanetItemController } from './PlanetItemController';
 
 export class PlanetItemView extends React.Component {
 	
 	constructor(props) {
         super(props);
-		
+        
+        this.id = props.match.params.id;
+        //this.planetItemController = new PlanetItemController();
+
 		this.state = { 
 			id: 1, 
 			name: "Mercury", 
@@ -36,13 +39,11 @@ export class PlanetItemView extends React.Component {
   
 	handleChangeLastVisitDate(event) {
 		// some validation
-		var date = new Date(Date.parse(event.target.value));
+        var date = new Date(event.target.value + 'T00:00:00.000Z');
 		
 		this.setState({
 			lastVisitDate: date
         });
-
-        debugger;
 	};
 	
 	handleChangeRadius(event) {
@@ -53,6 +54,8 @@ export class PlanetItemView extends React.Component {
 	};
 	
     render() {
+        debugger;
+        //2004-01-31T21:00:00.000Z"
         var lastVisitDate = this.state.lastVisitDate && this.state.lastVisitDate.toISOString ? this.state.lastVisitDate.toISOString().slice(0, 10) : this.state.lastVisitDate;
 		
         return <div>
@@ -97,8 +100,15 @@ export class PlanetItemView extends React.Component {
         </div>;
     }
 	
-	componentDidMount() {
-		//this
+    componentDidMount() {
+        //this.planetItemController.initState();
+        var url = "api/Planets/get/" + this.id;
+
+        fetch(url).then(response => response.json())
+            .then(data => {
+                data.lastVisitDate = new Date(data.lastVisitDate);
+                this.setState(data);
+            });
 	}
 	
 	handleClick(e) {

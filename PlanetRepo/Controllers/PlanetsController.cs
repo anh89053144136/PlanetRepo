@@ -20,10 +20,13 @@ namespace PlanetRepo.Controllers
             this.helper = helper;
         }
 
+        [HttpGet("[action]/{id?}")]
+        public Planet Get(int id) => helper.GetCurrentSession().Query<Planet>().FirstOrDefault(x => x.id == id);
+
         [HttpGet("[action]")]
         public PageModel<Planet> List(string orderBy, string order, int page, int rowsPerPage)
         {
-            var session = this.helper.GetCurrentSession();
+            var session = helper.GetCurrentSession();
             var allPlanets = session.Query<Planet>();
 
             return new PageModel<Planet>() {

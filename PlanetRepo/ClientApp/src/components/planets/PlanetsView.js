@@ -22,8 +22,6 @@ export class PlanetsView extends React.Component {
 		this.planetsTable = React.createRef();
 		this.model.addListener((e) => { this.onModelChange(e) });
 		this.controller = new PlanetsController(this.model);
-
-		//this.planetsTable.setState({});
     }
 	
 	onModelChange(newState) {
@@ -35,7 +33,6 @@ export class PlanetsView extends React.Component {
 	} 
 	
     render() {
-		//large
         return <div>
 			<h1>Planet repository</h1> 
 			<p>

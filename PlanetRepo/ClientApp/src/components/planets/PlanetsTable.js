@@ -60,26 +60,26 @@ export class PlanetsTable extends React.Component {
                     var lastVisitDate = row.lastVisitDate && row.lastVisitDate.toISOString ? row.lastVisitDate.toISOString().slice(0, 10) : row.lastVisitDate;
 					
 					return (
-					  <TableRow key={row.name}>
-						<TableCell component="th" scope="row">
-						  {row.name}
-						</TableCell>
-						<TableCell>{lastVisitDate}</TableCell>
-						<TableCell numeric>{row.radius}</TableCell>
-						<TableCell numeric>
-							<Grid container spacing={8}>
-								<Grid item>
-									<Button variant="fab" href={"#/planetitem/" + row.id}>
-										<EditIcon />
-									</Button>
-								</Grid>
-								<Grid item>
-									<Button variant="fab">
-										<DeleteForeverIcon />
-									</Button>
-								</Grid>
-							</Grid>
-						</TableCell>
+                        <TableRow key={row.id}>
+						    <TableCell component="th" scope="row">
+						      {row.name}
+						    </TableCell>
+						    <TableCell>{lastVisitDate}</TableCell>
+						    <TableCell numeric>{row.radius}</TableCell>
+						    <TableCell numeric>
+							    <Grid container spacing={8}>
+								    <Grid item>
+									    <Button variant="fab" href={"#/planetitem/" + row.id}>
+										    <EditIcon />
+									    </Button>
+								    </Grid>
+								    <Grid item>
+									    <Button variant="fab">
+										    <DeleteForeverIcon />
+									    </Button>
+								    </Grid>
+							    </Grid>
+						    </TableCell>
 					  </TableRow>
 					);
 				  })}
