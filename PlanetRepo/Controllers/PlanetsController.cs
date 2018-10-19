@@ -34,5 +34,31 @@ namespace PlanetRepo.Controllers
                 recordCount = allPlanets.Count()
             };
         }
+
+        [HttpPost("[action]")]
+        public void save([FromBody] Planet planet)
+        {
+            try
+            {
+                helper.GetCurrentSession().Save(planet);
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        [HttpDelete("[action]/{id?}")]
+        public void Delete(int id)
+        {
+            try
+            {
+                helper.GetCurrentSession().Delete(helper.GetCurrentSession().Query<Planet>().Where(x => x.id == id));
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }

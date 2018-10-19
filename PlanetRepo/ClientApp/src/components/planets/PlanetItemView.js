@@ -3,14 +3,17 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SaveIcon from '@material-ui/icons/Save';
+import CloseIcon from '@material-ui/icons/Close';
 
 import { PlanetItemController } from './PlanetItemController';
 
@@ -23,26 +26,25 @@ export class PlanetItemView extends React.Component {
         //this.planetItemController = new PlanetItemController();
 
 		this.state = { 
-			id: 1, 
-			name: "Mercury", 
-			lastVisitDate: new Date(2004, 1, 1), 
-			radius: 2439.7 
-		};
+            id: this.id,
+            name: "",
+            lastVisitDate: "",
+            radius: "",
+            savedMessageOpen: false,
+            loading: true
+        };
     }
 	
 	handleChangeName(event) {
 		// some validation
 		this.setState({
-			name: event.target.value
+			name: event.target.value,
 		});
 	};
   
 	handleChangeLastVisitDate(event) {
-		// some validation
-        var date = new Date(event.target.value + 'T00:00:00.000Z');
-		
 		this.setState({
-			lastVisitDate: date
+            lastVisitDate: event.target.value + 'T00:00:00.000Z'
         });
 	};
 	
@@ -54,9 +56,10 @@ export class PlanetItemView extends React.Component {
 	};
 	
     render() {
-        debugger;
+        //debugger;
+        
         //2004-01-31T21:00:00.000Z"
-        var lastVisitDate = this.state.lastVisitDate && this.state.lastVisitDate.toISOString ? this.state.lastVisitDate.toISOString().slice(0, 10) : this.state.lastVisitDate;
+        var lastVisitDate = this.state.lastVisitDate && this.state.lastVisitDate.length >= 10 ? this.state.lastVisitDate.slice(0, 10) : "";
 		
         return <div>
 			<h1>Planet item</h1> 
@@ -91,26 +94,70 @@ export class PlanetItemView extends React.Component {
 						 <ArrowBackIcon /> Back
 					</Button>
 				</Grid>
-				<Grid item>
-				<Button variant="extendedFab" color="primary" onClick={(e) => this.handleClick(e)}>
-					 <SaveIcon /> Save
-				</Button>
+                <Grid item>
+                    <Button variant="extendedFab" color="primary" disabled={this.state.loading} onClick={(e) => this.handleSaveClick(e)}>
+					     <SaveIcon /> Save
+				    </Button>
 				</Grid>
-			</Grid>
+            </Grid>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                open={this.state.savedMessageOpen}
+                autoHideDuration={6000}
+                onClose={(event, reason) => this.handleClose(event, reason)}
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">Saved successfully!</span>}
+                action={[
+                    <IconButton key="close" aria-label="Close" color="inherit" onClick={(event, reason) => this.handleClose(event, reason)}>
+                        <CloseIcon />
+                    </IconButton>,
+                ]}
+            />
         </div>;
     }
-	
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({ savedMessageOpen: false });
+    };
+
     componentDidMount() {
         //this.planetItemController.initState();
         var url = "api/Planets/get/" + this.id;
 
         fetch(url).then(response => response.json())
             .then(data => {
-                data.lastVisitDate = new Date(data.lastVisitDate);
+                //data.lastVisitDate = new Date(data.lastVisitDate);
                 this.setState(data);
+                this.setState({ loading: false });
             });
 	}
 	
-	handleClick(e) {
+    handleSaveClick(e) {
+        var url = "api/Planets/save";
+
+        this.setState({ loading: true });
+
+        fetch(url, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state)
+        })
+        //.then(response => response.json())
+        .then(data => {
+            //data.lastVisitDate = new Date(data.lastVisitDate);
+            this.setState({ loading: false, savedMessageOpen: true });
+        });
 	}
 }
