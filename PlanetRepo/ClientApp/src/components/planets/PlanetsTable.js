@@ -45,7 +45,7 @@ export class PlanetsTable extends React.Component {
     }
 
     render() {
-		let tableBody = (this.state == null || this.state.records.length ==0 || this.state.loading == true) ? 
+		let tableBody = (this.state === null || this.state.records.length === 0 || this.state.loading === true) ? 
 			<TableBody>
 				<TableRow>
 					<TableCell colSpan={4}>
@@ -54,7 +54,7 @@ export class PlanetsTable extends React.Component {
 						</div>
 					</TableCell>
 				</TableRow>
-			</TableBody>:
+			</TableBody> :
 			<TableBody>
 				  {this.state.records.map(row => {
                     var lastVisitDate = row.lastVisitDate && row.lastVisitDate.toISOString ? row.lastVisitDate.toISOString().slice(0, 10) : row.lastVisitDate;
@@ -74,7 +74,7 @@ export class PlanetsTable extends React.Component {
 									    </Button>
 								    </Grid>
 								    <Grid item>
-									    <Button variant="fab">
+                                        <Button variant="fab" onClick={() => this.handleDelete(row.id)}>
 										    <DeleteForeverIcon />
 									    </Button>
 								    </Grid>
@@ -138,10 +138,10 @@ export class PlanetsTable extends React.Component {
 	handleRequestSort(property)  
 	{
 		const orderBy = property;
-		let order = 'desc';
+		var order = 'desc';
 		
 		if (this.state.orderBy === property && this.state.order === 'desc') {
-		  order = 'asc';
+            order = 'asc';
 		}
 		
 		if(!this.onChange) return;
@@ -180,5 +180,19 @@ export class PlanetsTable extends React.Component {
 			page: this.state.page,
 			rowsPerPage: event.target.value
 		});
-	};
+    };
+
+    handleDelete(id) {
+        var url = "api/Planets/delete/" + id;
+
+        fetch(url, { method: 'delete' }).then(response => response.json())
+            .then(data => {
+                this.onChange({
+                    order: this.state.order,
+                    orderBy: this.state.orderBy,
+                    page: this.state.page,
+                    rowsPerPage: this.state.rowsPerPage
+                });
+            });
+    }
 }

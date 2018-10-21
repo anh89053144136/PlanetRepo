@@ -49,16 +49,21 @@ namespace PlanetRepo.Controllers
         }
 
         [HttpDelete("[action]/{id?}")]
-        public void Delete(int id)
+        public ActionStatus Delete(int id)
         {
+            var session = helper.GetCurrentSession();
             try
             {
-                helper.GetCurrentSession().Delete(helper.GetCurrentSession().Query<Planet>().Where(x => x.id == id));
+                var obj = session.Query<Planet>().FirstOrDefault(x => x.id == id);
+                session.Delete(obj);
+                session.Flush();
             }
             catch (Exception ex)
             {
-
+                return new ActionStatus() { Message = ex.Message, ResultCode = ResultCode.Fail };
             }
+
+            return new ActionStatus() { ResultCode = ResultCode.Ok };
         }
     }
 }
