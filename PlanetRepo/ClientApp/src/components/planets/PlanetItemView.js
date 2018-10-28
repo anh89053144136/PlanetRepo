@@ -131,6 +131,11 @@ export class PlanetItemView extends React.Component {
 
     componentDidMount() {
         //this.planetItemController.initState();
+        if (!this.id || this.id == 0) {
+            this.setState({ loading: false });
+            return;
+        }
+
         var url = "api/Planets/get/" + this.id;
 
         fetch(url).then(response => response.json())

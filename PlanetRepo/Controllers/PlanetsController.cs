@@ -40,7 +40,14 @@ namespace PlanetRepo.Controllers
         {
             try
             {
-                helper.GetCurrentSession().Save(planet);
+                if (planet.id > 0)
+                {
+                    helper.GetCurrentSession().Update(planet);
+                }
+                else
+                {
+                    helper.GetCurrentSession().Save(planet);
+                }
             }
             catch(Exception ex)
             {
