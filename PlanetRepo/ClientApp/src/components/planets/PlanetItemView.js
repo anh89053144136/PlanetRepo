@@ -59,8 +59,8 @@ export class PlanetItemView extends React.Component {
         //debugger;
         
         //2004-01-31T21:00:00.000Z"
-        var lastVisitDate = this.state.lastVisitDate && this.state.lastVisitDate.length >= 10 ? this.state.lastVisitDate.slice(0, 10) : "";
-		
+        var lastVisitDate = this.state.lastVisitDate && this.state.lastVisitDate.length >= 10 ? this.state.lastVisitDate.slice(0, 10) : "00-00-00";
+        
         return <div>
 			<h1>Planet item</h1> 
 			

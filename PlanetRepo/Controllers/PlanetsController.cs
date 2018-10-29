@@ -36,7 +36,7 @@ namespace PlanetRepo.Controllers
         }
 
         [HttpPost("[action]")]
-        public void save([FromBody] Planet planet)
+        public ActionStatus save([FromBody] Planet planet)
         {
             try
             {
@@ -48,10 +48,12 @@ namespace PlanetRepo.Controllers
                 {
                     helper.GetCurrentSession().Save(planet);
                 }
-            }
-            catch(Exception ex)
-            {
 
+                return new ActionStatus() { Message = planet.id.ToString(), ResultCode = ResultCode.Ok };
+            }
+            catch (Exception ex)
+            {
+                return new ActionStatus() { Message = ex.Message, ResultCode = ResultCode.Fail };
             }
         }
 
