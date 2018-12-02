@@ -163,6 +163,8 @@ export class PlanetItemView extends React.Component {
         .then(data => {
             //data.lastVisitDate = new Date(data.lastVisitDate);
             this.setState({ loading: false, savedMessageOpen: true });
+
+            this.props.history.push('/planets');
         });
 	}
 }
